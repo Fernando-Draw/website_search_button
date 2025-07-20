@@ -1,36 +1,64 @@
-# Copyright 2022 Studio73 - Ioan Galan <ioan@studio73.es>
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# Copyright 2025 Infinity Draw - Fernando de la Torre <fernando@infinitydraw.es>
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from urllib.parse import urlparse, urlunparse
-
-from odoo import _, fields, models
+from odoo import fields, models
 
 
 class Website(models.Model):
     _inherit = "website"
 
-    whatsapp_number = fields.Char(string="WhatsApp number")
-    whatsapp_text = fields.Char(
-        "Default text for Whatsapp",
-        help="Default text to send as message",
-        translate=True,
+    # Activar/desactivar botón flotante de búsqueda
+    search_button_enabled = fields.Boolean(
+        string="Activar botón de búsqueda flotante",
+        default=True,
     )
-    whatsapp_track_url = fields.Boolean(
-        "Track URL",
-        help="Indicate in the user's message the URL of the page from which it "
-        "was sent",
+    # Posición: 'Inf-Izq' o 'Inf-Der'
+    search_button_position = fields.Selection(
+        [
+            ("right", "Inferior derecha"),
+            ("left", "Inferior izquierda"),
+        ],
+        string="Posición del botón",
+        default="right",
     )
-
-    def _get_track_url_message(self, httprequest_full_path):
-        sent_from = _("Sent from:")
-        base_url = self.domain or self.env["ir.config_parameter"].sudo().get_param(
-            "web.base.url"
-        )
-        url = f"{base_url} {httprequest_full_path}"
-        parsed_url = urlparse(url)
-        cleaned_url = urlunparse(parsed_url._replace(query=""))
-        if self.whatsapp_track_url:
-            whatsapp_track_url_text = (
-                f"{self.whatsapp_text} %0A%0A*{sent_from} {cleaned_url}*"
-            )
-        return whatsapp_track_url_text
+    # Márgenes
+    search_button_margin_bottom = fields.Integer(
+        string="Margen inferior (px)",
+        default=100,
+    )
+    search_button_margin_side = fields.Integer(
+        string="Margen lateral (px)",
+        default=10,
+    )
+    # Colores
+    search_button_bg_color = fields.Char(
+        string="Color de fondo",
+        default="#000000",
+    )
+    search_button_icon_color = fields.Char(
+        string="Color del icono",
+        default="#ffffff",
+    )
+    # Tamaño
+    search_button_size = fields.Integer(
+        string="Tamaño del botón (px)",
+        default=60,
+    )
+    # Forma
+    search_button_shape = fields.Selection(
+        [
+            ("circle", "Círculo"),
+            ("square", "Cuadrado con esquinas redondeadas"),
+        ],
+        string="Forma del botón",
+        default="circle",
+    )
+    # Visibilidad
+    search_button_show_desktop = fields.Boolean(
+        string="Mostrar en escritorio",
+        default=True,
+    )
+    search_button_show_mobile = fields.Boolean(
+        string="Mostrar en móvil",
+        default=True,
+    )

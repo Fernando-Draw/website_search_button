@@ -1,2 +1,2 @@
-- [Studio73](https://www.studio73.es):  
-  - Ioan Galan \<<ioan@studio73.es>\>
+- [Infinity Draw](https://infinitydraw.es):  
+  - Fernando de la Torre \<<fernando@infinitydraw.es>\>

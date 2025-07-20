@@ -1,28 +1,33 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<odoo>
-    <template id="layout" name="Floating WhatsApp Icon" inherit_id="website.layout">
-        <xpath expr="//div[@id='wrapwrap']" position="after">
-            <t t-set="extra_info" t-value="''" />
-            <t
-                t-if="website.whatsapp_text"
-                t-set="extra_info"
-                t-value="website.whatsapp_text"
-            />
-            <t
-                t-if="website.whatsapp_track_url"
-                t-set="extra_info"
-                t-value="website._get_track_url_message(request.httprequest.full_path)"
-            /><!-- %0A newline -->
-            <div t-if="website.whatsapp_number" class="whatsapp_icon">
-                <a
-                    target="_blank"
-                    t-attf-href="https://api.whatsapp.com/send?phone={{website.whatsapp_number}}&amp;text={{extra_info}}"
-                    title="WhatsApp Floating Icon"
-                >
-                <i class="fa fa-whatsapp" />
-            </a>
-            </div>
 
+<!--    Copyright 2025 Infinity Draw - Fernando de la Torre <fernando@infinitydraw.es>
+        License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
+
+<odoo>
+    <template id="website_search_button_layout" name="Floating Search Button" inherit_id="website.layout">
+        <xpath expr="//div[@id='wrapwrap']" position="after">
+            <t t-if="website.search_button_enabled">
+                <button
+                    t-attf-class="website_search_floating_btn o_search_floating_btn_{{ website.search_button_shape }}"
+                    t-att-style="'background: %s; color: %s; width: %spx; height: %spx; bottom: %spx; %s: %spx; display: %s;'
+                        % (
+                            website.search_button_bg_color,
+                            website.search_button_icon_color,
+                            website.search_button_size,
+                            website.search_button_size,
+                            website.search_button_margin_bottom,
+                            'right' if website.search_button_position == 'right' else 'left',
+                            website.search_button_margin_side,
+                            'block' if (website.search_button_show_desktop or website.search_button_show_mobile) else 'none'
+                        )"
+                    data-show-desktop="{{ '1' if website.search_button_show_desktop else '0' }}"
+                    data-show-mobile="{{ '1' if website.search_button_show_mobile else '0' }}"
+                    aria-label="Buscar"
+                    type="button"
+                    >
+                    <i class="fa fa-search"/>
+                </button>
+            </t>
         </xpath>
     </template>
 </odoo>

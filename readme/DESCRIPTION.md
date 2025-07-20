@@ -1,2 +1,2 @@
-Enable a WhatsApp floating button on the website to be able to send a
-message quickly
+Enable a floating search button on the website designed for platforms
+of small screens devices

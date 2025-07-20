@@ -1,31 +1,122 @@
-$whatsapp-green: #01e675;
-$icon-size: 56px;
+// Copyright 2025 Infinity Draw - Fernando de la Torre <fernando@infinitydraw.es>
+// License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-.whatsapp_icon {
-    z-index: 5;
+$icon-size: 60px;
+
+// Estilos para el botón flotante de búsqueda
+.website_search_floating_btn {
+    z-index: 1050;
     position: fixed;
-    inset: auto 30px 110px auto; // Right 30px, bottom 90px
     display: flex;
     justify-content: center;
     align-items: center;
-    width: $icon-size;
-    height: $icon-size;
-    background: $whatsapp-green;
-    border-radius: 50%;
+    border: none;
     cursor: pointer;
     white-space: nowrap;
     text-decoration: none;
     padding: 0;
     margin: 0;
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-    transition: all 0.3s ease;
-
+    transition: all 0.3s cubic-bezier(.4,0,.2,1), opacity 0.3s;
+    opacity: 1;
+    will-change: transform, opacity;
+    bottom: 100px;
+    right: 10px;
+    
     i {
-        color: #fff;
         font-size: 30px;
+        pointer-events: none;
     }
-
     &:hover {
         filter: brightness(90%);
     }
+    &.hide-by-scroll {
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(100%);
+    }
+}
+.o_search_floating_btn_circle {
+    border-radius: 50%;
+}
+.o_search_floating_btn_square {
+    border-radius: 15%;
+}
+
+// Responsive: ocultar según atributos data
+@media (max-width: 767px) {
+    .website_search_floating_btn[data-show-mobile="0"] {
+        display: none !important;
+    }
+}
+@media (min-width: 768px) {
+    .website_search_floating_btn[data-show-desktop="0"] {
+        display: none !important;
+    }
+}
+
+// Modal de búsqueda flotante personalizado
+.wsb-modal-bg {
+    position: fixed;
+    z-index: 2000;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.55);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+.wsb-modal-bg-show {
+    opacity: 1;
+    pointer-events: auto;
+}
+.wsb-modal-content {
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+.wsb-search-form {
+    margin-top: 133px;
+    width: 75vw;
+    max-width: 900px;
+    min-width: 250px;
+    height: 85px;
+    background: #fff;
+    border-radius: 42px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    transform: translateY(-120px);
+    opacity: 0;
+    transition: transform 0.35s cubic-bezier(.4,0,.2,1), opacity 0.35s;
+}
+.wsb-modal-bg-show .wsb-search-form {
+    transform: translateY(0);
+    opacity: 1;
+}
+.wsb-search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 2rem;
+    height: 60px;
+    background: transparent;
+    padding: 0 12px;
+}
+.wsb-search-btn {
+    background: none;
+    border: none;
+    font-size: 2.2rem;
+    color: #888;
+    cursor: pointer;
+    margin-left: 8px;
+    display: flex;
+    align-items: center;
+}
+.wsb-search-btn:active {
+    color: #222;
 }
